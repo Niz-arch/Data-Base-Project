@@ -44,7 +44,7 @@
     \textbf{Member 2}  & Mohamed JBARI  \\ \hline
     \textbf{Member 3}  & Riyad HABIBI \\ \hline
     \textbf{Member 4}  & Chaimae IAA    \\ \hline
-    \textbf{Repository Link} & \texttt{https://github.com/...} \\ \hline
+    \textbf{Repository Link} & \texttt{https://github.com/Niz-arch/Data-Base-Project} \\ \hline
   \end{tabular}
   \rule{0.9\textwidth}{0.5pt}\\
 \end{center}
@@ -60,6 +60,7 @@ This deliverable translates the RLMS ER diagram into a relational schema, mappin
 
 \section{Team roles}
 Nizar: Modelizing relational table for entities Person and Laboratories.\\
+Jbari: Modelized relational table for the parts regarding ResearchProjects, Budget and EquipmentModel with EquipmentUnit.\\
 Chaimae: Modeling relational table for entities Calibration Record and Consumable\\
 Riyad: Modelized relational table for the parts regarding certifications, reservations and maintenance.\\
 
@@ -73,7 +74,9 @@ Riyad: Modelized relational table for the parts regarding certifications, reserv
 -Participation constraint for reservations was managed through using a table for the relationship (reserves), which receives as attribute the tuple (resID, serialNo), with serialNo defined as NOT NULL, which guarantees its existence (meaning that of the equipment unit), while not limiting it to one and one only (using the tuple property). Thus a reservation can be made for many units, but also at least one.\\
 -Maintenance is given the primary key (startTS, serialNo), given that it is a weak entity, thus depending only on its owner's identifier. The startTS being its partial key, both allow us to identify a given maintenance operation, as each operation may be identified with its starting point and on what it's being conducted (the equipment unit).\\
 -The technical staff ID is mentioned as well, as a NOT NULL attribute of (maintenance) (given the participation constraint). Since we also have a key constraint, exactly one staff member can conduct a given maintenance operation. The primary key (startTS, serialNo) guarantees the unicity of the staff member per operation.\\
-
+-"Status" attribute is built-in in sql so we have to find another name.\\
+-Sometimes I can't figure if I should make the date aattribute of an entity as an INT or a VARCHAR.\\
+-On delete no action or cascade, nothing is specified in the ER diagram so I don't know which one should be used.\\
 
 \section{Discussion}
 Lessons learned:\\
@@ -84,8 +87,8 @@ Lessons learned:\\
 -Not to try and complicate things when it comes to key & participation constraints. Sometimes we need to add some elements as primary keys to guarantee unicity, yet i noticed sometimes unicity may be guaranteed by something else (ie: for reservations, the resID guarantees it, thus no need to add other foreign keys as part of some primary key for reservations).\\
 
 \section{Conclusion and toughts for next lab}
-A simple .sql file where we implementated the relational model. The only thing to address better is the consistency of code style, because the each member has his style (example: the use of camel or snake case, tabulations ...), we should find a good style and all of us use it. 
-
+-A simple .sql file where we implementated the relational model. The only thing to address better is the consistency of code style, because the each member has his style (example: the use of camel or snake case, tabulations ...), we should find a good style and all of us use it.\\
+-I think it would be way more effective if we had less work and more consice exercices, because in the case of this  project everyone does what he is assigned to but no one has the time to fully understand what his teammates did and try to overcome the challenges they faced as well to maximise his learning experience.\\
 
 
 \end{document}
