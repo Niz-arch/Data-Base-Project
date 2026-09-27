@@ -136,7 +136,7 @@ CREATE TABLE requires (
 	certification_code INT NOT NULL,
 	modelID INT NOT NULL,
 	PRIMARY KEY (modelID , certification_code),
-    FOREIGN KEY (certification_code) REFERENCES Certification(code_), -- RIYAD hna khssk tsmii attribute dialk b7ali
+    FOREIGN KEY (certification_code) REFERENCES Certification(cert_code),
     FOREIGN KEY (modelID) REFERENCES EquipmentModel(modelIndentifier)
 );
 
