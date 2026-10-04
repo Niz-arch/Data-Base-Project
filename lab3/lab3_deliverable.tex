@@ -1,0 +1,171 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{booktabs}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\title{\textbf{Report\\Deliverable: Lab 3}}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{Team Information}
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{ll}
+\toprule
+\textbf{Team Members} & \textbf{Tasks} \\
+\midrule
+IAA Chaimae & From Task 1 to Task 4 \\
+JBARI Mohamed & From Task 5 to Task 8 \\
+HABIBI Riyad & From Task 9 to Task 12 \\
+EL HAZZITI Nizar & From Task 13 to Task 15 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section*{Tasks}
+
+\begin{enumerate}
+    \item[\textbf{1.}] 
+    \[
+    \pi_{\text{firstName}, \text{lastName}}\left(\sigma_{\text{madeby}=\text{pid}}(\text{Person} \times \text{Reservation})\right)
+    \]
+
+    \item[\textbf{2.}] 
+    \[
+    \pi_{\text{pid}}(\text{Attached}) \cup \pi_{\text{pid}}\left(\sigma_{\text{role}=\text{'PI'}}(\text{Participates})\right)
+    \]
+
+    \item[\textbf{3.}] 
+    \[
+    \begin{multlined}
+    \pi_{\text{labId}}\left(\sigma_{\text{building}=\text{'College of Computing'}}(\text{Laboratory})\right) \\
+    {}\cup \pi_{\text{labId}}\left(\text{EquipmentUnit} \bowtie \sigma_{\text{category}=\text{'CPU Server'}}(\text{EquipmentModel})\right)
+    \end{multlined}
+    \]
+
+    \item[\textbf{4.}] 
+    \[
+    \begin{multlined}
+    \pi_{\text{labId}}\left(\text{EquipmentUnit} \bowtie \sigma_{\text{category}=\text{'CPU Server'}}(\text{EquipmentModel})\right) \\
+    {}\cap \pi_{\text{labId}}\left(\text{EquipmentUnit} \bowtie \sigma_{\text{category}=\text{'GPU Server'}}(\text{EquipmentModel})\right)
+    \end{multlined}
+    \]
+
+    \item[\textbf{5.}]
+    \[
+    \begin{aligned}
+    \text{CClabs} &\leftarrow \pi_{\text{labId}} \left( \sigma_{\text{building}=\text{'College of Computing'}} (\text{Laboratory}) \right) \\
+    \text{tuple} &\leftarrow \pi_{\text{supervisorPid},\,\text{labId}} (\text{Laboratory}) \\
+    \text{answer} &\leftarrow \text{tuple}\;/\;\text{CClabs} \\
+    &\pi_{\text{pid},\,\text{firstName},\,\text{lastName}} \left( \left( \text{Faculty} \bowtie_{\text{pid}=\text{supervisorPid}} \text{answer} \right) \bowtie_{\text{pid}} \text{Person} \right)
+    \end{aligned}
+    \]
+
+    \item[\textbf{6.}]
+    \[
+    \begin{aligned}
+    \text{B}_2 &\leftarrow \pi_{\text{budgetLine}} \left( \sigma_{\text{labId}=2} (\text{FundsLab}) \right) \\
+    \text{P} &\leftarrow \pi_{\text{projectCode}} \left( \text{FundsPrj} \bowtie_{\text{budgetLine}} \text{B}_2 \right) \\
+    &\pi_{\text{pid},\,\text{projectCode}} (\text{Participates})\;/\;\text{P}
+    \end{aligned}
+    \]
+
+    \item[\textbf{7.}]
+    \[
+    \begin{aligned}
+    \text{C} &\leftarrow \gamma_{\text{pid};\ \text{count}(\text{resId}) \to n} \left( \text{Person} \loj_{\text{pid}=\text{madeByPid}} \text{Reservation} \right) \\
+    \text{C}_1 &\leftarrow \rho_{\text{C}_1(p_1,\,n_1)} (\text{C}) \\
+    \text{C}_2 &\leftarrow \rho_{\text{C}_2(p_2,\,n_2)} (\text{C}) \\
+    &\pi_{p_1,\,p_2} \left( \text{C}_1 \bowtie_{n_1 > n_2} \text{C}_2 \right)
+    \end{aligned}
+    \]
+
+    \item[\textbf{8.}]
+    \[
+    \begin{aligned}
+    \text{RU} &\leftarrow \pi_{\text{madeByPid},\,\text{labId}} \left( \text{Reservation} \bowtie_{\text{resId}} \text{Reserves} \bowtie_{\text{serialNo}} \text{EquipmentUnit} \right) \\
+    \text{X}_1 &\leftarrow \rho_{\text{X}_1(\text{pid},\,\text{lab}_1)} (\text{RU}) \\
+    \text{X}_2 &\leftarrow \rho_{\text{X}_2(\text{pid}_2,\,\text{lab}_2)} (\text{RU}) \\
+    &\pi_{\text{pid}} \left( \sigma_{\text{pid}=\text{pid}_2 \,\land\, \text{lab}_1 \neq \text{lab}_2} (\text{X}_1 \times \text{X}_2) \right)
+    \end{aligned}
+    \]
+
+    \item[\textbf{9.}] 
+    \[
+    \begin{multlined}
+    \pi_{\text{resId}} \Big( \sigma_{\text{submissionTS}=\text{'september 2026'}} \Big( \sigma_{\text{name}=\text{'AI movement'}} \Big( \\
+    \text{Reservation} \bowtie_{\text{resId}} \text{Reserves} \bowtie_{\text{serialNo}} \text{EquipmentUnit} \bowtie_{\text{labId}} \text{Laboratory} \Big) \Big) \Big)
+    \end{multlined}
+    \]
+
+    \item[\textbf{10.}] 
+    \[
+    \pi_{\text{pid}} \left( \sigma_{n>1} \left( \gamma_{\text{pid} (\text{count}(\text{projectCode}) \to n)} (\text{Participates}) \right) \right)
+    \]
+
+    \item[\textbf{11.}] 
+    \[
+    \begin{aligned}
+    &\rho(A, \text{Reservation} \bowtie_{\text{resId}} \text{Reserves} \bowtie_{\text{serialNo}} \text{EquipmentUnit}) \\
+    &\pi_{\text{approverPid}} \Big( \text{Reservation} \bowtie_{\text{resId}} \\
+    &\qquad \pi_{\text{resId}} \left( \sigma_{n>1} \left( \gamma_{\text{resId} (\text{count}(\text{labId}) \to n)} (A) \right) \right) \Big)
+    \end{aligned}
+    \]
+
+    \item[\textbf{12.}] 
+    \[
+    \begin{multlined}
+    \pi_{\text{madeByPid}}(\text{Reservation}) - \pi_{\text{madeByPid}}\Big( \\
+    \sigma_{\substack{\text{PlannedStart} \le \text{'November 6 2026'} \\ \land \text{PlannedEnd} \ge \text{'November 6 2026'}}} (\text{Reservation}) \Big)
+    \end{multlined}
+    \]
+
+    \item[\textbf{13.}] 
+    \[
+    \begin{aligned}
+    \text{LabCounts} &\leftarrow \gamma_{\text{labId};\, \text{cnt} \leftarrow \text{COUNT}(\text{unitId})}(\text{EquipmentUnit}) \\
+    &\quad {}\cup \pi_{\text{labId}, 0 \to \text{cnt}}(\text{Laboratory} - \pi_{\text{labId}}(\text{EquipmentUnit})) \\
+    \text{AvgCounts} &\leftarrow \gamma_{;\, \text{avgCnt} \leftarrow \text{AVG}(\text{cnt})}(\text{LabCounts}) \\
+    \text{Result} &\leftarrow \pi_{\text{labId}}\left(\sigma_{\text{cnt} < \text{avgCnt}}(\text{LabCounts} \times \text{AvgCounts})\right)
+    \end{aligned}
+    \]
+
+    \item[\textbf{14.}] 
+    \[
+    \begin{aligned}
+    \text{ApprovedRes} &\leftarrow \pi_{\text{labId}, \text{pid}, \text{resId}}\big(\sigma_{\text{status}=\text{'Approved'}}(\text{Reservation}) \\
+    &\qquad \bowtie \text{ReservedUnit} \bowtie \text{EquipmentUnit}\big) \\
+    \text{Counts} &\leftarrow \gamma_{\text{labId}, \text{pid};\, \text{cnt} \leftarrow \text{COUNT}(\text{resId})}(\text{ApprovedRes}) \\
+    \text{C}_1 &\leftarrow \rho(C_1(\text{labId}, p_1, \text{cnt}_1), \text{Counts}) \\
+    \text{C}_2 &\leftarrow \rho(C_2(\text{labId}, p_2, \text{cnt}_2), \text{Counts}) \\
+    \text{NonMax} &\leftarrow \pi_{\text{labId}, p_1}\big(\sigma_{\text{cnt}_1 < \text{cnt}_2}(C_1 \bowtie_{C_1.\text{labId} = C_2.\text{labId}} C_2)\big) \\
+    \text{Result} &\leftarrow \pi_{\text{labId}, \text{pid}}(\text{Counts}) - \rho(\text{NonMax}(\text{labId}, \text{pid}), \text{NonMax})
+    \end{aligned}
+    \]
+
+    \item[\textbf{15.}] 
+    \[
+    \begin{aligned}
+    \text{Res2025} &\leftarrow \sigma_{\substack{\text{subDate} \ge \text{'2025-01-01'} \\ \wedge \text{subDate} \le \text{'2025-12-31'}}}(\text{Reservation}) \\
+    \text{Result} &\leftarrow \pi_{\text{pid}}\left(\sigma_{\text{cnt} \ge 3}\left(\gamma_{\text{pid};\, \text{cnt} \leftarrow \text{COUNT}(\text{resId})}(\text{Res2025})\right)\right)
+    \end{aligned}
+    \]
+\end{enumerate}
+
+\section*{Key Challenges}
+
+\begin{itemize}
+    \item \textbf{Aggregations and Averages:} Standard relational algebra cannot natively calculate statistical metrics such as averages or group counts. This was addressed by using the extended grouping and aggregation operator $\gamma$ alongside cross products to enable comparisons against scalar values.
+    \item \textbf{Cardinality Thresholds:} Enforcing minimum count constraints requires either multi-way self-joins with inequality predicates or grouping tuples via $\gamma$ and applying selection conditions on the resulting aggregate attribute.
+    \item \textbf{Time Management:} The shape of these tasks given to us in each lab requires a huge amount of time, and effort to handle. Especially since the topics are getting more and more complex, so this whole issue prevents us from doing all the project individually so we can practice everything, and forces us to divide tasks that can be easier than other ones, which leads to a non total understanding  of the course material.
+    
+\end{itemize}
+
+\end{document}
