@@ -1,0 +1,86 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{graphicx}   % images
+\usepackage{fancyhdr}   % headers/footers
+\usepackage{tcolorbox}
+\usepackage{listings}
+\usepackage{xcolor}
+\geometry{margin=1in}
+
+% ---------- Header ----------
+\setlength{\headheight}{36pt}
+\setlength{\headsep}{18pt}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancyhf{}
+\fancyhead[L]{\includegraphics[width=0.13\textwidth, keepaspectratio]{Figures/UM6Plogo.png}}
+\fancyhead[R]{\includegraphics[width=0.13\textwidth, keepaspectratio]{Figures/CC.jpg}}
+\fancyfoot[L]{Data Management Lab}
+\fancyfoot[R]{Prof. Karima Echihabi}
+\fancyfoot[C]{Page \thepage}
+
+% ---------- Deliverable Template ----------
+\begin{document}
+\thispagestyle{empty}
+\begin{center}
+  \includegraphics[width=0.25\textwidth]{Figures/UM6Plogo.png}\hfill
+  \includegraphics[width=0.25\textwidth]{Figures/CC.jpg}
+  \vspace{1.2cm}
+
+  {\LARGE \textbf{Deliverable : \:Normalization Lab5 }}\\[0.6cm]
+  {\large \textbf{Data Management Course}}\\[0.2cm]
+  {\large UM6P College of Computing}\\[0.8cm]
+
+  {\normalsize \textbf{Professor:} Karima Echihabi \quad 
+   \textbf{Program:} Computer Engineering}\\[0.1cm]
+  {\normalsize \textbf{Session:} Fall 2026}\\[1cm]
+
+  \rule{0.9\textwidth}{0.5pt}\\[0.5cm]
+  {\large \textbf{Team Information}} \\[0.3cm]
+  \begin{tabular}{|l|l|}
+    \hline
+    \textbf{Team Name} & Team N°1 \\ \hline
+    \textbf{Member 1}  & Nizar El HAZZITI  \\ \hline
+    \textbf{Member 2}  & Mohamed JBARI  \\ \hline
+    \textbf{Member 3}  & Riyad HABIBI \\ \hline
+    \textbf{Member 4}  & Chaimae IAA    \\ \hline
+    \textbf{Repository Link} & \texttt{https://github.com/Niz-arch/Data-Base-Project} \\ \hline
+  \end{tabular}
+  \rule{0.9\textwidth}{0.5pt}\\
+\end{center}
+\clearpage
+\pagestyle{fancy}
+
+% ---------- Sections for Students ----------
+\section{Introduction}
+This lab focuses on the concept of normalization, determining whether a given relation is in any normal form (BCNF, 3NF..) as well as how to decompose a relation into, say, BCNF, whether it is lossless or not and whether FDs are preserved in what results.
+
+\section{Requirements}
+What we were required to do can be resumed in the following: \\
+Task 1 consists in reviewing the FDs precendently determined in LAB 4 solution, and determining which of them are in BCNF. \\ 
+Task 2 covers many hypothetical relations, and gives instructions to apply to each of them, these include determining the candidate key, whether the relation verifies BCNF, or any normal form, decomposing into BCNF if required, determining whether it is lossless or not and finally determining whether important FDs are preserved.
+
+\section{Team roles}
+Nizar: Worked on section a) of Task 2\\
+Jbari: Worked on section b) of Task 2\\
+Chaimae: Worked on section c) of Task 2\\
+Riyad: Worked on sections d) and e) of Task 2\\
+
+As for Task 1, each team member covered FDs linked with their respectively dedicated parts: \\
+Nizar: Persons and Laboratories \\
+Jbari: ResearchProjects, Budget and EquipmentModel \\
+Chaimae: Calibration Record and Consumable \\
+Riyad: Certifications, reservations and maintenance \\
+
+
+\section{Methodology}
+When it comes to determining whether a relation is in BCNF, we have a look at the FDs in the closure. Either we find a counterexample to it being in BCNF (ie: in all of task 2), meaning we find an FD that violates it, or we conclude that all FDs in the closure verify BCNF, thus relation is in BCNF. Similarly, we determine whether a relation is in 3NF after having already checked that it is / is not in BCNF. 3NF only adds an additional potential condition: if R is in BCNF, it is already in 3NF, but if not, then we check the other condition. There were no particular assumptions involved in how we dealt with the exercise.
+
+
+\section{Discussion}
+Our main remark is that there was very little variety in the 2 tasks: in task 1, the answer is very direct, since all FDs are similar. As for task 2, there was a bit of redundancy for some answers (ie: FDs are preserved in all decompositions, no initial relation is in BCNF...etc). This has been particularly confusing for us, as we found ourselves repeating almost identical justifications over and over again. \\ 
+
+\section{Conclusion and toughts for next lab}
+We should work slightly more on the readability of our work. This lab was particularly interesting, since the tasks were similar, thus making it easier for each team member to grasp what his teammates worked on and how they proceeded, we hope to work on this side of collaboration and further strengthen it for upcoming labs. \\ 
+ 
+\end{document}
