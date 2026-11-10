@@ -2,6 +2,7 @@
 
 -- population 
 
+-- depends on the project u can remove it or not use it
 USE DBPROJECT;
 
 INSERT INTO Person (pid, firstName, lastName, email, affiliation, startDate, endDate)VALUES
