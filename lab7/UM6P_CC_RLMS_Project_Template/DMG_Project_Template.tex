@@ -1,53 +1,97 @@
-\documentclass[a4paper,11pt]{article}
+\documentclass[a4paper,12pt]{article}
 \usepackage[utf8]{inputenc}
 \usepackage{geometry}
-\usepackage{graphicx}
-\usepackage{fancyhdr}
-\geometry{margin=0.75in}
-\setlength{\headheight}{30pt}
-\pagestyle{fancy}
+\usepackage{graphicx}   % images
+\usepackage{fancyhdr}   % headers/footers
+\usepackage{tcolorbox}
+\usepackage{listings}
+\usepackage{xcolor}
+\geometry{margin=1in}
+
+% ---------- Header ----------
+\setlength{\headheight}{36pt}
+\setlength{\headsep}{18pt}
+\renewcommand{\headrulewidth}{0.4pt}
 \fancyhf{}
-\fancyhead[L]{\includegraphics[width=0.12\textwidth]{Figures/UM6Plogo.png}}
-\fancyhead[R]{\includegraphics[width=0.12\textwidth]{Figures/CC.jpg}}
-\fancyfoot[L]{Data Management Lab 7}
+\fancyhead[L]{\includegraphics[width=0.13\textwidth, keepaspectratio]{Figures/UM6Plogo.png}}
+\fancyhead[R]{\includegraphics[width=0.13\textwidth, keepaspectratio]{Figures/CC.jpg}}
+\fancyfoot[L]{Data Management Lab}
 \fancyfoot[R]{Prof. Karima Echihabi}
 \fancyfoot[C]{Page \thepage}
 
+% ---------- Deliverable ----------
 \begin{document}
+\thispagestyle{empty}
 \begin{center}
-  \includegraphics[width=0.18\textwidth]{Figures/UM6Plogo.png}\hfill
-  \includegraphics[width=0.18\textwidth]{Figures/CC.jpg}\\[4pt]
-  {\Large\textbf{Lab 7: Advanced Queries, Views, Triggers, and Database Programming}}\\[4pt]
-  Data Management Course -- UM6P College of Computing\\
-  Professor: Karima Echihabi \quad Program: Computer Engineering\\
-  Session: Fall 2026\\[5pt]
-  \textbf{Team 1:} Nizar El Hazziti, Mohamad Jbari, Riyad Habibi, Chaimae IAA\\
-  \texttt{https://github.com/Niz-arch/Data-Base-Project}
-\end{center}
+  \includegraphics[width=0.25\textwidth]{Figures/UM6Plogo.png}\hfill
+  \includegraphics[width=0.25\textwidth]{Figures/CC.jpg}
+  \vspace{1.2cm}
 
-\section*{Introduction and requirements}
-This lab extends the RLMS database from Lab 6 with advanced queries, views, row checks, triggers, and stored and host-language routines. It also discusses which rules belong in the database and which need application-level handling.
+  {\LARGE \textbf{Lab 7: Advanced Queries, Views, Triggers, and Database Programming}}\\[0.6cm]
+  {\large \textbf{Data Management Course}}\\[0.2cm]
+  {\large UM6P College of Computing}\\[0.8cm]
+
+  {\normalsize \textbf{Professor:} Karima Echihabi \quad
+   \textbf{Program:} Computer Engineering}\\[0.1cm]
+  {\normalsize \textbf{Session:} Fall 2026}\\[1cm]
+
+  \rule{0.9\textwidth}{0.5pt}\\[0.5cm]
+  {\large \textbf{Team Information}} \\[0.3cm]
+  \begin{tabular}{|l|l|}
+    \hline
+    \textbf{Team Name} & Team No. 1 \\ \hline
+    \textbf{Member 1}  & Nizar El Hazziti \\ \hline
+    \textbf{Member 2}  & Riyad Habibi \\ \hline
+    \textbf{Member 3}  & Chaimae Iaa \\ \hline
+    \textbf{Member 4}  & Mohamed Jbari \\ \hline
+    \textbf{Repository Link} & \texttt{https://github.com/Niz-arch/Data-Base-Project} \\ \hline
+  \end{tabular}
+  \rule{0.9\textwidth}{0.5pt}\\
+\end{center}
+\clearpage
+\pagestyle{fancy}
 
 \section*{Team roles}
-Chaimae prepared Part 1's seven advanced queries and the project-participation triggers in Part 4. Nizar prepared the double-booking triggers (Part 4, task 2), the five Part 2 views, and Part 3 CHECK constraints. Mohamad Jbari prepared the certification-eligibility trigger (Part 4, task 3), stored routines and Python client (Part 5), and discussion items 1, 2, 5, and 6 in Part 7. Riyad is responsible for the remaining trigger tasks, Part 6, and final report assembly.
+\begin{tabular}{@{}ll@{}}
+Chaimae Iaa & Part 1; Part 4.1; Part 7: 3, 4, 7, 8 \\
+Nizar El Hazziti & Parts 2--3; Part 4.2 \\
+Mohamed Jbari & Part 4.3; Part 5; Part 7: 1, 2, 5, 6 \\
+Riyad Habibi & Parts 4.4--6; report assembly \\
+\end{tabular}
 
-\section*{Method and implementation}
-The scripts use the Lab 6 schema and its official sample data. The views use joins, grouping, conditional expressions, and date functions to provide reusable summaries. The checks enforce row domains, non-negative values, and time ordering. The certification trigger uses a nested \texttt{NOT EXISTS} check so models with no required certificates remain reservable, while every required certificate must be valid at the reservation start. Stored routines keep repeated database operations in SQL; the Python program uses Connector/Python parameters, iterates through query results, calls the procedure, and catches the database error raised by the trigger.
+\section*{Implementation difficulties}
+The views combine several relations while keeping rows with no related activity, such as people or projects without reservations. For upcoming reservations, we count distinct reservation IDs so several units in the same lab do not inflate the count. The double-booking trigger compares time intervals for the same unit, while the certification trigger checks every certificate required by the selected equipment model and its expiration date.
 
-\section*{Discussion and Part 7 answers}
-The main implementation detail was ensuring that a reservation with several units in one laboratory is counted once; the view uses \texttt{COUNT(DISTINCT resId)}. The certification check also has to test each required certificate, rather than merely finding one matching certificate. CHECK constraints cannot express such cross-table rules, which is why the trigger is used.
+The CHECK constraints cover enumerated values, non-negative amounts, costs, prices and stock quantities, positive consumption quantities, and valid time intervals. Cross-table rules need triggers because a CHECK constraint only sees values from the row being changed. The scripts use the Lab 6 sample schema and the SQL forms covered in the lecture.
 
+\section*{Assumptions}
+The views use the current date to identify reservations in the next fourteen days and the next future approved reservation. The shared sample includes reservation 2 as approved; Part 2 moves its planned interval into the next fourteen days to provide a row for the upcoming-reservations view. The stock summary includes stock occurrences recorded in \texttt{Stocks}; it does not create rows for lab and consumable pairs without stock.
+
+\section*{Part 6}
+Riyad is responsible for classifying the Lab 1 requirements that cannot be fully enforced by CHECK constraints and row-level triggers. This section is to be completed with his assigned work.
+
+\section*{Part 7}
 \begin{enumerate}
-\item \textbf{EquipmentUnit references an EquipmentModel:} a foreign key. It directly enforces that each unit's model exists.
-\item \textbf{Display approved reservations per laboratory:} a view. It encapsulates the joins and count for repeated display.
-\item \textbf{At most one PI per project:} a trigger. It checks existing participation rows when a PI is inserted or changed.
-\item \textbf{Every project has at least one PI:} application or transaction-level logic. A row trigger cannot reject project creation before its first participation is inserted.
-\item \textbf{Required valid certifications before adding a unit:} a trigger. It checks the reservation maker, equipment model, required certificates, and expiration dates at insertion.
-\item \textbf{Display stock level for each laboratory and consumable:} a view. It joins stock and consumable data and derives the LOW/OK label.
-\item \textbf{Consumables acquired only in an existing reservation (CO10):} application or transaction-level logic for the complete acquisition process. The consumption row has a reservation foreign key, but rules about every acquisition path require the application to route acquisition through that process.
-\item \textbf{Equipment reserved before use (RE4):} application or transaction-level logic. The database has no record of equipment use events to compare with its reservations.
+  \item A foreign key ensures that every EquipmentUnit references an existing EquipmentModel.
+  \item A view can encapsulate the joins and count used to display approved reservations per laboratory.
+  \item A trigger checks existing participation rows to enforce at most one PI per project.
+  \item Application or transaction-level logic is needed for at least one PI: a row trigger cannot reject project creation before its first participant is inserted.
+  \item A trigger checks the reservation maker's required and unexpired certifications before a unit is added.
+  \item A view joins laboratory stock to consumables and derives the current LOW or OK stock level.
+  \item The reservation foreign key covers recorded consumption, but enforcing every acquisition path requires application or transaction-level logic.
+  \item The database cannot check whether a unit was reserved before use when equipment use events are not stored; this belongs in application or transaction-level logic.
 \end{enumerate}
 
-\section*{Conclusion}
-The completed sections provide reusable query interfaces and database enforcement for the assigned RLMS rules. Riyad's trigger tasks and Part 6 classification remain to be integrated before submission.
+\section*{Part 4}
+\noindent\textbf{CE5--CE6.} Before adding an equipment unit to a reservation, the certification trigger checks that the reservation maker holds every certification required by the equipment model and that each certificate is valid on the planned start date. A model with no required certifications remains reservable.
+
+\medskip
+\noindent\textbf{EQ7.} The double-booking triggers check the reservation interval against other approved reservations for the same unit. The check runs both when a unit is added to an approved reservation and when an existing reservation is approved or rescheduled.
+
+\medskip
+\noindent\textbf{PR2--PR4.} The participation triggers reject administrative staff and non-academic people in PI or Co-PI roles, and prevent a project from having more than one PI or Co-PI.
+
+\medskip
+\noindent\textbf{CHECK constraints.} Part 3 uses CHECK constraints for enumerated attribute values, non-negative amounts, costs, prices and stock quantities, positive quantities used, and valid reservation and maintenance intervals.
+
 \end{document}
